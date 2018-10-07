@@ -1,12 +1,23 @@
+/**
+ * @file KenoBet.h
+ * @author Allan de Miranda and Josue Claudio
+ * @brief Class KenoBet
+ * @version 0.1
+ * @date 2018-10-06
+ * 
+ * @copyright Copyright (c) 2018
+ * 
+ */
 #ifndef KENO_BET_H
 #define KENO_BET_H
 
-#include <iostream>
-#include <cstdlib>
-#include <fstream>
-#include <random>
-#include <string>
-#include <cstring>
+#include <iostream>     //???
+#include <cstdlib>      //???
+#include <fstream>      //???
+#include <random>       //???
+#include <string>       //???
+#include <cstring>      //???
+#include <vector>       //???
 
 using number_type = unsigned short int; // <! data type for a keno hit .
 using cash_type = float;                // <! Defines the wage type in this application .
