@@ -9,13 +9,14 @@
  * 
  */
 
+#include <iostream> // std::cout , std::cin , std::endl;
 #include <fstream>  // std::ifstream
 #include <string>   // std::string
-#include <cstring>  // std::strcat
+#include <vector>   // std::vector
+#include <fstream>
+#include <iomanip>
 
-#include <iostream>
-
-//#include "../include/KenoBet.h"
+#include "../include/KenoBet.h"
 
 /**
  * @brief Function to get base file parameters
@@ -25,60 +26,68 @@
  * @return true If everything happened normal
  * @return false If there were any errors
  */
-bool catch_bet(char *fileName, float *bet){
+bool catch_bet(char *fileName, std::vector <float> &bet){
     std::string route = "../data/"; // Begin route
     route = route + fileName; // Complete route
     std::ifstream ifs(route); // Open Route
     if(!ifs.good()){
         return false;
     }
-    for(int i(0); i<3; ++i){
-        ifs >> bet[i];
+    float valuer;
+    while(ifs >> valuer){
+        bet.push_back(valuer);
     }
 	ifs.close();
     return true;
 }
 
+/**
+ * @brief Function to initialize game parameters
+ * 
+ * @param FileName File name game playes
+ * @param fist The bet
+ * @return true If everything happened normal
+ * @return false If there were any errors
+ */
+bool initialization_parameters(char *FileName, KenoBet &fist){
+    std::vector <float> parameters;
+    if(!catch_bet(FileName, parameters)){
+        return false;
+    }
+    //fist.set_wage(parameters[0]); // Sets the amount of money the player is betting
+    //fist.rounds(parameters[1]); ONDE ESTÀ O PARÃMETRO DAS RODADAS ???
+    for(int i(2); i<(parameters.size()); ++i){
+        //fist.add_number((short int)(parameters[i]));
+    } 
+    return true;
+}
+
 int main( int argc, char **argv )
-{/*
-    if( argc < 2 or argc > 2 )
-    {
-        std::cerr << "Erro: o programa deve receber apenas um argumento = nome do arquivo de aposta. ex: aposta1.txt" << std::endl;
+{
+    /**
+     * @brief Initialized player
+     * 
+     */
+    KenoBet player_bet;
+    std::cout << ">>> Preparing to read bet file [data/" << argv[1] << "], please wait..." << std::endl;
+    if(!initialization_parameters(argv[1],player_bet)){
+        std::cout << ">>> Displays startup error, check the data file" << std::endl;
+        std::cout << "--------------------------------------------------" << std::endl;
         return EXIT_FAILURE;
+    } else {
+        std::cout << "--------------------------------------------------" << std::endl;
+        std::cout << ">>> Bet successfully read!" << std::endl;
     }
-    std::ifstream rFile( argv[1] );
-    if( !rFile.good() )
-    {
-        std::cerr << "Erro: falha na leitura do arquivo " << argv[1] << std::endl;
-        return EXIT_FAILURE;
-    }
-    /// criando aposta
-    KenoBet aposta1;
-    float wage;
-    rFile >> wage;
-    if( aposta1.set_wage(wage) )
-    {
-        int nr;
-        rFile >> nr;
-    }
-    number_type aux;
-    number_type count(0);
-    //set_of_numbers_type spots;
 
-    /// prenchendo m_spots, falta tirar os elementos unicos( usar unique ) e ordenar( qsort ) 
-    while( rFile >> aux or count < 15 )
-    {
-        if( aposta1.add_number(aux) )
-        {
-            ++count;
-        }
-    }*/
-
-    float teste[3];
-    catch_bet(argv[1],teste);
-    for(int i(0); i<3; ++i){
-        std::cout << teste[i] << std::endl;
-    }
+    /**
+     * @brief Initial Detail
+     * 
+     */
+    std::cout << "You are going to wage a total of $1500 dollars." << std::endl;
+    std::cout << "Going for a total of 3 rounds, waging $500 per round." << std::endl;
+    std::cout << std::endl;
+    std::cout << "Your bet has 3 numbers. They are: [ 12 21 64 ]" << std::endl;
 
     return EXIT_SUCCESS;
+    
 }

@@ -43,6 +43,7 @@
         "utility": "cpp",
         "algorithm": "cpp",
         "complex": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "string": "cpp"
     }
 }
