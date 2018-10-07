@@ -111,6 +111,38 @@ bool initialization_parameters(char *FileName, KenoBet &fist){
     return true;
 }
 
+/**
+ * @brief 
+ * 
+ * @param round_now Current round
+ * @param round_total Total possible rounds
+ * @param your_wage How much was wagered
+ * @param hits_are Numbers that were drawn
+ * @param You_hit Your numbers hit played
+ * @param size_You_hit Number of numbers You_hit
+ * @param You_hit_win_number Number of numbers win
+ * @param Payout_rate Your payout rate
+ * @param you_came_out_with Thus you came out with
+ * @param Your_net_balance Your net balance so far
+ */
+void This_is_round(int round_now, int round_total, float your_wage, int *hits_are, int *You_hit, int size_You_hit, int You_hit_win_number, int Payout_rate, float you_came_out_with, float Your_net_balance){
+    std::cout << "This is round #" << round_now << " of " << round_total << ", and your wage is $" << your_wage << ". Good luck!" << std::endl;
+    std::cout << "The hits are: [ " << std::endl;
+    for(int i(0); i<15; ++i){
+        std::cout << hits_are[i] << " ";
+    }
+    std::cout << "]" << std::endl;
+    std::cout << std::endl;
+    std::cout << "You hit the following number(s) [ ";
+    for(int i(0); i<size_You_hit; ++i){
+        std::cout << You_hit[i] << " ";
+    }
+    std::cout << "], a total of " << You_hit_win_number << " hits out of " << size_You_hit << std::endl;
+    std::cout << "Payout rate is " << Payout_rate << ", thus you came out with: $" << you_came_out_with << std::endl;
+    std::cout << "Your net balance so far is: $" << Your_net_balance << " dollars." << std::endl;
+    std::cout << "--------------------------------------------------" << std::endl;
+}
+
 int main( int argc, char **argv )
 {
     /**
@@ -132,16 +164,34 @@ int main( int argc, char **argv )
      * @brief Initial Detail
      * 
      */
-    std::cout << "You are going to wage a total of $" << /*player_bet.m_wage() [pegar quantidade de dienhiro ??]  << */ " dollars." << std::endl;
-    std::cout << "Going for a total of " << /*player_bet.roud() [pegar rodadas ??]  << */ " rounds, waging $" << /*player_bet.m_wage()/player_bet.roud() [??]  << */ " per round." << std::endl;
+    std::cout << "    You are going to wage a total of $" << /*player_bet.m_wage() [pegar quantidade de dienhiro ??]  << */ " dollars." << std::endl;
+    std::cout << "    Going for a total of " << /*player_bet.roud() [pegar rodadas ??]  << */ " rounds, waging $" << /*player_bet.m_wage()/player_bet.roud() [??]  << */ " per round." << std::endl;
     std::cout << std::endl;
-    std::cout << "Your bet has " << /*player_bet.m_spots.size() << */" numbers. They are: [ ";
+    std::cout << "    Your bet has " << /*player_bet.m_spots.size() << */" numbers. They are: [ ";
     /*
     for(unsigned short int i : player_bet.m_spots){
         std::cout << i << " ";
     }
     */
     std::cout << "]" << std::endl;
+    std::cout << "         -------+---------" << std::endl;    
+    std::cout << "         Hits   | Payout  " << std::endl;
+    std::cout << "         -------+---------" << std::endl;
+    for(int i(0); i<payout_table[2/*<--player_bet.m_spots.size() << */].size(); ++i){
+        std::cout << std::setfill (' ');
+        std::cout << std::setw(11);
+        std::cout << std::fixed <<  i << std::setw(6) << " |";
+        std::cout << " " << std::setprecision(1) << payout_table[2/*<--player_bet.m_spots.size() << */][i] << std::endl;
+    }
+    std::cout << "         --------------------------------------------------" << std::endl; 
+    
+    /**
+     * AQUI FICARÁ A PARTE DAS RODADAS DE CADA JOGO.
+     *      USANDO A FUNÇÃO CORRETA, É POSSIVEL GERAR O LAYOUT NECESSÁRIO.
+     * FUNÇÃO TESTE ADOTADA TEMPORARIAMENTE !!!
+     * 
+     */
+    
 
     return EXIT_SUCCESS;
     
