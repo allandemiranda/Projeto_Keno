@@ -44,6 +44,7 @@
         "algorithm": "cpp",
         "complex": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iomanip": "cpp"
     }
 }
