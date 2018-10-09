@@ -45,6 +45,8 @@
         "complex": "cpp",
         "deque": "cpp",
         "string": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "cstdarg": "cpp",
+        "functional": "cpp"
     }
 }

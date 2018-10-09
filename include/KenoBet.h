@@ -12,6 +12,7 @@
 #define KENO_BET_H
 
 #include <iostream>     //???
+#include <algorithm>
 #include <cstdlib>      //???
 #include <fstream>      //???
 #include <random>       //???
@@ -53,9 +54,35 @@ class KenoBet
         @return The vector < spot_type > with the player ’s spots picked so far . */
         set_of_numbers_type get_spots(void) const;
 
+        /**
+         * @brief Get the rounds object
+         * 
+         * @param rounds 
+         * @return true 
+         * @return false 
+         */
+        bool set_rounds(const number_type rounds); 
+
+        /**
+         * @brief Get the rounds object
+         * 
+         * @return number_type 
+         */
+        number_type get_rounds(void) const;
+/*
+        cash_type get_net_balance(void);
+        cash_type get_wage_initial(cash_type m_wage_initial) const;
+        cash_type you_came_out_with(void);
+*/
     private:
         set_of_numbers_type m_spots; // <! The player ’s bet .
         cash_type m_wage; // <! The player ’s wage
+        number_type m_rounds; // "Quantidade de rodadas" de apostas que o jogador irá jogar
+        /*
+        cash_type m_net_balance; // ( "m_wage" - ("Valor inicial" / "Quantidade de rodadas") )+ "Pagamento da rodada"
+        cash_type m_wage_initial; // Valor inicial
+        cash_type m_round_payment; // Pagamento da rodada
+        */
     
 };
 
