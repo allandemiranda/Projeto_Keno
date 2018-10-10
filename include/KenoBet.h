@@ -11,14 +11,12 @@
 #ifndef KENO_BET_H
 #define KENO_BET_H
 
-#include <iostream>     //???
+#include <iostream>  
 #include <algorithm>
-#include <cstdlib>      //???
-#include <fstream>      //???
-#include <random>       //???
-#include <string>       //???
-#include <cstring>      //???
-#include <vector>       //???
+#include <cstdlib>     
+#include <fstream> 
+#include <iomanip>
+#include <random>  
 
 using number_type = unsigned short int; // <! data type for a keno hit .
 using cash_type = float;                // <! Defines the wage type in this application .
@@ -45,6 +43,12 @@ class KenoBet
         /*! Returns to the current number of spots in the player ’s bet .
         @return Number of spots present in the bet . */
         size_t size(void) const;
+        /**
+         * @brief 
+         * 
+         * @return set_of_numbers_type 
+         */
+        set_of_numbers_type set_hits();
         /*! Determine how many spots match the hits passed as argument .
         @param hits_ List of hits randomly chosen by the computer .
         @return An vector with the list of hits . */
@@ -69,21 +73,49 @@ class KenoBet
          * @return number_type 
          */
         number_type get_rounds(void) const;
-/*
+        // wage functions
+        /**
+         * @brief Set the wage initial object
+         * 
+         * @param wage_initial 
+         * @return true 
+         * @return false 
+         */
+        bool set_wage_initial(cash_type wage_initial);
+        /**
+         * @brief Get the wage initial object
+         * 
+         * @return cash_type 
+         */
+        cash_type get_wage_initial(void) const;
+        /**
+         * @brief Get the net balance object
+         * 
+         * @return cash_type 
+         */
         cash_type get_net_balance(void);
-        cash_type get_wage_initial(cash_type m_wage_initial) const;
-        cash_type you_came_out_with(void);
-*/
+        /**
+         * @brief Set the m round payment object
+         * 
+         * @param _round_payment 
+         */
+        void set_m_round_payment(cash_type _round_payment);
+        /**
+         * @brief Get the m round payment object
+         * 
+         * @return cash_type 
+         */
+        cash_type get_m_round_payment(void) const;
+
     private:
         set_of_numbers_type m_spots; // <! The player ’s bet .
         cash_type m_wage; // <! The player ’s wage
         number_type m_rounds; // "Quantidade de rodadas" de apostas que o jogador irá jogar
-        /*
+        
         cash_type m_net_balance; // ( "m_wage" - ("Valor inicial" / "Quantidade de rodadas") )+ "Pagamento da rodada"
         cash_type m_wage_initial; // Valor inicial
         cash_type m_round_payment; // Pagamento da rodada
-        */
-    
+        
 };
 
 #endif

@@ -8,14 +8,6 @@
  * @copyright Copyright (c) 2018
  * 
  */
-
-#include <iostream> // std::cout , std::cin , std::endl;
-#include <fstream>  // std::ifstream
-#include <string>   // std::string
-#include <vector>   // std::vector
-#include <fstream>
-#include <iomanip>
-
 #include "../include/KenoBet.h"
 
 // Global vector
@@ -103,13 +95,15 @@ bool initialization_parameters(char *FileName, KenoBet &fist){
     if(!catch_bet(FileName, parameters)){
         return false;
     }
-    if(!fist.set_wage((cash_type)(parameters[0]))){
+    if(!fist.set_wage_initial( (parameters[0]) ) ){  
         return false;
     }
+    
+    fist.set_wage( (parameters[0]) );
     if(!fist.set_rounds((number_type)(parameters[1]))){
         return false;
     }
-    for(int i(2); i<(parameters.size()); ++i){
+    for(number_type i(2); i<(parameters.size()); ++i){
         if(!fist.add_number((number_type)(parameters[i]))){
             return false;
         }
@@ -120,33 +114,60 @@ bool initialization_parameters(char *FileName, KenoBet &fist){
 /**
  * @brief 
  * 
- * @param round_now Current round
- * @param round_total Total possible rounds
- * @param your_wage How much was wagered
- * @param hits_are Numbers that were drawn
- * @param You_hit Your numbers hit played
- * @param size_You_hit Number of numbers You_hit
- * @param You_hit_win_number Number of numbers win
- * @param Payout_rate Your payout rate
- * @param you_came_out_with Thus you came out with
- * @param Your_net_balance Your net balance so far
+ * @param round_now 
+ * @param fist 
  */
-void This_is_round(int round_now, cash_type your_wage, set_of_numbers_type hits_are, set_of_numbers_type You_hit, KenoBet &fist, cash_type Payout_rate){
-    std::cout << "This is round #" << round_now << " of " << fist.get_rounds() << ", and your wage is $" << your_wage << ". Good luck!" << std::endl;
-    std::cout << "The hits are: [ " << std::endl;
+void This_is_round(const number_type &round_now, KenoBet &fist/*, cash_type Payout_rate*/){
+    std::cout << "         --------------------------------------------------" << std::endl;
+    std::cout << "         This is round #" << round_now << " of " << fist.get_rounds() << ", and your wage is $" << fist.get_wage_initial() / fist.get_rounds() << ". Good luck!" << std::endl;
+    fist.set_wage( fist.get_wage() - ( fist.get_wage_initial() / fist.get_rounds() ) + fist.get_m_round_payment() );
+    // std::cout<< "aqui " << fist.get_wage() << std::endl;
+    /// criando, inicializando e exibindo o vetor de hits
+    set_of_numbers_type hits_are = ( fist.get_hits(fist.set_hits()) );
+    std::cout << "         The hits are: [ ";
     for(number_type i : hits_are){
         std::cout << i << " ";
     }
     std::cout << "]" << std::endl;
     std::cout << std::endl;
-    std::cout << "You hit the following number(s) [ ";
-    for(number_type i : You_hit){
-        std::cout << i << " ";
+
+    /// criando, inicializando e exibindo o vetor com os valores que foram acertados no sorteio
+    set_of_numbers_type spots = fist.get_spots();
+    set_of_numbers_type You_hit;
+    number_type k(0); /// qtd de acertos
+    for( number_type i(0); i < spots.capacity(); ++i )
+    {
+        for( number_type j(0); j < hits_are.capacity(); ++j )
+        {
+            if( spots[i] == hits_are[j] )
+            {
+                You_hit.push_back( spots[i] );
+                ++k;
+            }        
+        }       
     }
-    std::cout << "], a total of " << You_hit.size() << " hits out of " << fist.get_spots.size() << std::endl;
-    std::cout << "Payout rate is " << Payout_rate << ", thus you came out with: $" << fist.you_came_out_with() << std::endl;
-    std::cout << "Your net balance so far is: $" << fist.get_net_balance() << " dollars." << std::endl;
-    std::cout << "--------------------------------------------------" << std::endl;
+    
+    /// se acertou algum número sorteado
+    if( k > 0 )
+    {
+        /// mostrando números acertados
+        std::cout << "         You hit the following number(s) [ ";
+        for( number_type i : You_hit )
+            std::cout << i << " ";  
+        std::cout << "], a total of " << You_hit.size() << " hits out of " << fist.size() << std::endl; 
+        /// setando o cash currente e o pagamento
+        fist.set_wage( ( fist.get_wage_initial() / fist.get_rounds() ) * payout_table[fist.get_spots().size()-1][You_hit.size()] );
+        fist.set_m_round_payment( ( fist.get_wage_initial() / fist.get_rounds() ) * payout_table[fist.get_spots().size()-1][You_hit.size()]);
+        // mostrando o pagamento da tabela
+        std::cout << "         Payout rate is " <<payout_table[fist.get_spots().size()-1][You_hit.size()] << ", thus you came out with: $" << fist.get_m_round_payment() << std::endl;
+    }
+    else
+    {
+        std::cout << "         You dont hit anyone number" << std::endl;        
+    }
+    /// finaliza mostrando o net balance
+    std::cout << "         Your net balance so far is: $" << fist.get_net_balance() << " dollars." << std::endl;
+    // std::cout << "--------------------------------------------------" << std::endl;
 }
 
 int main( int argc, char **argv )
@@ -157,7 +178,7 @@ int main( int argc, char **argv )
      */
     KenoBet player_bet;
     std::cout << ">>> Preparing to read bet file [data/" << argv[1] << "], please wait..." << std::endl;
-    if(!initialization_parameters(argv[1],player_bet)){
+    if(!initialization_parameters(argv[1], player_bet)){
         std::cout << ">>> Displays startup error, check the data file" << std::endl;
         std::cout << "--------------------------------------------------" << std::endl;
         return EXIT_FAILURE;
@@ -170,39 +191,47 @@ int main( int argc, char **argv )
      * @brief Initial Detail
      * 
      */
-    std::cout << "    You are going to wage a total of $" << player_bet.get_wage() << " dollars." << std::endl;
-    std::cout << "    Going for a total of " << player_bet.get_rounds() << " rounds, waging $" << player_bet.get_wage()/player_bet.get_rounds()  <<  " per round." << std::endl;
+    std::cout << "    You are going to wage a total of $" << player_bet.get_wage_initial() << " dollars." << std::endl;
+    std::cout << "    Going for a total of " << player_bet.get_rounds() << " rounds, waging $" << player_bet.get_wage_initial()/player_bet.get_rounds()  <<  " per round." << std::endl;
     std::cout << std::endl;
-    std::cout << "    Your bet has " /*<< player_bet.get_spots.size()*/<< 3 << " numbers. They are: [ ";
-    /*
+    std::cout << "    Your bet has " << player_bet.get_spots().capacity() << " numbers. They are: [ ";
+    
     for(number_type i : player_bet.get_spots()){
         std::cout << i << " ";
-    }
-    */
+    }  
+    
     std::cout << "]" << std::endl;
     std::cout << "         -------+---------" << std::endl;    
     std::cout << "         Hits   | Payout  " << std::endl;
     std::cout << "         -------+---------" << std::endl;
     for(number_type i(0); i<(payout_table[player_bet.get_rounds()-1].size()); ++i){
-        std::cout << std::setfill (' ');
-        std::cout << std::setw(11);
-        std::cout << std::fixed <<  i << std::setw(6) << " |";
-        std::cout << " " << std::setprecision(1) << payout_table[player_bet.get_rounds()-1][i] << std::endl;
+        std::cout << std::setw(10);
+        // std::cout << std::setfill('');
+        std::cout << std::fixed << i << std::setw(7) << " |";
+        std::cout << " " << std::setprecision(0) << payout_table[player_bet.get_rounds()-1][i] << std::endl;
     }
-    std::cout << "         --------------------------------------------------" << std::endl; 
-    
+
     /**
      * AQUI FICARÁ A PARTE DAS RODADAS DE CADA JOGO.
      *      USANDO A FUNÇÃO CORRETA, É POSSIVEL GERAR O LAYOUT NECESSÁRIO.
      * FUNÇÃO TESTE ADOTADA TEMPORARIAMENTE !!!
      * 
      */
-    for(int i(0); i<4; ++i){
-        This_is_round();
+    for(number_type i(1); i <= player_bet.get_rounds(); ++i){
+        This_is_round(i, player_bet);
     }
 
     /// FIM
-    
+    std::cout << ">>> End of rounds!" << std::endl;
+    std::cout << "--------------------------------------------------" << std::endl;
+
+    std::cout << "===== SUMMARY =====" << std::endl;
+    std::cout << ">>> You spent in this game a total of " << player_bet.get_wage_initial()<<  std::endl;
+    if( player_bet.get_net_balance() - player_bet.get_wage_initial() > 0 )
+        std::cout << ">>> Hooray, you won $" << player_bet.get_net_balance() - player_bet.get_wage_initial() << " dollars"<<std::endl;
+    else
+        std::cout << ">>> ;( you dont won nothing, bye ;(" << std::endl;
+    std::cout << ">>> You are leaving the Keno table with $" << player_bet.get_net_balance() << " dollars"<<std::endl;
 
     return EXIT_SUCCESS;
     
