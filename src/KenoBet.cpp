@@ -12,11 +12,6 @@
 #include "KenoBet.h" // Include the header
 
 /**
- * @brief Global vector payout_table
- * 
- */
-
-/**
  * @brief Function to get base file parameters
  * 
  * @param fileName File name
@@ -25,7 +20,7 @@
  * @return false If there were any errors
  */
 bool KenoBet::catch_bet(char *fileName, std::vector <float> &bet){
-    std::string route = "../data/"; // <! Begin route
+    std::string route = "data/"; // <! Begin route
     route = route + fileName; // <! Complete route
     std::ifstream ifs(route); // <! Open Route
     if(!ifs.good()){
@@ -135,6 +130,7 @@ bool KenoBet::add_number(number_type spot_)
         /// *** ------>>>>>  TERMINAR ESTA PARTE *** <<<<-------------
         std::sort(m_spots.begin(), m_spots.end());
         std::unique(m_spots.begin(), m_spots.end());
+        /// *** ------>>>>>  TERMINAR ESTA PARTE *** <<<<-------------
         auto last = std::unique(m_spots.begin(), m_spots.end());
         m_spots.erase( last, m_spots.end() );
        

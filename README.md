@@ -20,8 +20,8 @@ Nos casinos online, o jogo de Keno é geralmente apresentado num ecrã que cont�
 
 Utilizando o terminal:
 1. Faça o clone deste projeto com `git clone https://github.com/allandemiranda/Projeto_Keno.git`
-2. Entre na pasta do projeto e digite o comando `g++ -std=c++11 src/main.cpp src/KenoBet.cpp -I include/ -o /bin/Keno.out`
-3. Rode a aplicação com `.\bin\Keno.out <nome do arquivo de jogadas>`
+2. Entre na pasta do projeto e digite o comando `g++ -std=c++11 src/main.cpp src/KenoBet.cpp -I include/ -o bin/Keno.out`
+3. Rode a aplicação com `./bin/Keno.out <nome do arquivo de jogadas>`
 
 ### Criando jogadas para a aplicação
 

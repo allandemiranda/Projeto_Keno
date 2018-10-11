@@ -21,7 +21,7 @@
 
 using number_type = unsigned short int; // <! data type for a keno hit .
 using cash_type = float;                // <! Defines the wage type in this application .
-using set_of_numbers_type = std ::vector<number_type>;
+using set_of_numbers_type = std ::vector<number_type>; // <! Vector
 
 /**
  * @brief Global vector payout_table
@@ -211,7 +211,7 @@ class KenoBet
         set_of_numbers_type m_spots; // <! The player ’s bet .
         cash_type m_wage; // <! The player ’s wage
         number_type m_rounds; // <!"Number of rounds" of bets that the player will play        
-        cash_type m_net_balance; // <! ( "m_wage" - ("Valor inicial" / "Quantidade de rodadas") )+ "Pagamento da rodada"
+        cash_type m_net_balance; // <! The net balance
         cash_type m_wage_initial; // <! Initial value
         cash_type m_round_payment; // <! Round payment   
 };
