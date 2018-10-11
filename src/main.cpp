@@ -9,8 +9,6 @@
  * 
  */
 
-#include "KenoBet.cpp" /// **** -----> TEMPORÁRIO
-
 /**
  * @brief Main
  * 

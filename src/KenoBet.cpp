@@ -9,7 +9,7 @@
  * 
  */
 
-#include "../include/KenoBet.h" // Include the header
+#include "KenoBet.h" // Include the header
 
 /**
  * @brief Global vector payout_table
@@ -137,16 +137,7 @@ void This_is_round(const number_type &round_now, KenoBet &fist){
     set_of_numbers_type spots = fist.get_spots();
     set_of_numbers_type You_hit;
     number_type num_hits(0); // Number of hits
-    //// ***-----> Verificar se aqui pode ser feito uma busca binaria <-------*** /////
-    /*for( number_type i(0); i < spots.capacity(); ++i ){
-        for( number_type j(0); j < hits_are.capacity(); ++j ){
-            if( spots[i] == hits_are[j] ){
-                You_hit.push_back( spots[i] );
-                ++num_hits;
-            }        
-        }       
-    }*/
-    for(number_type i(0); i < spots.capacity(); ++i){ // <<<<<<<-------------- PQ CAPACITY ?
+    for(number_type i(0); i < spots.capacity(); ++i){
         if(std::binary_search(hits_are.begin(), hits_are.end(), spots[i])){
             You_hit.push_back( spots[i] );
             ++num_hits;
