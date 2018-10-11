@@ -288,17 +288,21 @@ set_of_numbers_type KenoBet::get_spots(void) const
 set_of_numbers_type KenoBet::set_hits(void)
 {
     std::random_device rd;
-    std::mt19937 mt( rd() ); /// <---------------------------- O QUE É ISSO ????
+    std::mt19937 mt( rd() ); 
     std::uniform_int_distribution<number_type> dist(1, 80);
     set_of_numbers_type hits;
-    for( number_type i(0); i < 15; ++i )
-    {
-        hits.push_back(dist(mt));
-    }
-    std::sort(hits.begin(), hits.end());
-    auto last = std::unique(hits.begin(), hits.end());
-    hits.erase( last, hits.end() );
-    
+    for(int i(0); i<15; ++i){
+        while(true){
+            auto new_rand = dist(mt);
+            if(std::binary_search(hits.begin(), hits.end(), new_rand)){
+                continue;
+            } else {
+                hits.push_back(new_rand);
+                break;
+            } 
+        }
+        std::sort(hits.begin(), hits.end());
+    }   
     return hits;
 }
 
