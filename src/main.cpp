@@ -39,8 +39,9 @@ int main( int argc, char **argv )
      * @brief Initial Detail
      * 
      */
-    std::cout << "    You are going to wage a total of $" << player_bet.get_wage_initial() << " dollars." << std::endl;
-    std::cout << "    Going for a total of " << player_bet.get_rounds() << " rounds, waging $" << player_bet.get_wage_initial()/player_bet.get_rounds()  <<  " per round." << std::endl;
+    std::cout << std::setprecision(2);
+    std::cout << "    You are going to wage a total of $" << std::fixed << player_bet.get_wage_initial() << " dollars." << std::endl;
+    std::cout << "    Going for a total of " << player_bet.get_rounds() << " rounds, waging $" << (player_bet.get_wage_initial()/player_bet.get_rounds())  <<  " per round." << std::endl;
     std::cout << std::endl;
     std::cout << "    Your bet has " << player_bet.get_spots().capacity() << " numbers. They are: [ ";    
     for(number_type i : player_bet.get_spots()){
@@ -53,7 +54,7 @@ int main( int argc, char **argv )
     for(number_type i(0); i < payout_table[player_bet.size()-1].size(); ++i){
         std::cout << std::setw(10);
         std::cout << std::fixed << i << std::setw(7) << " |";
-        std::cout << " " << std::setprecision(0) << payout_table[player_bet.size()-1][i] << std::endl;
+        std::cout << " " << std::setprecision(1) << payout_table[player_bet.size()-1][i] << std::endl;
     }
 
     /**
@@ -73,12 +74,12 @@ int main( int argc, char **argv )
     std::cout << std::endl;
     std::cout << "===== SUMMARY =====" << std::endl;
     std::cout << ">>> You spent in this game a total of " << player_bet.get_wage_initial()<<  std::endl;
-    if( (player_bet.get_net_balance() - player_bet.get_wage_initial()) > 0 ){
-        std::cout << ">>> Hooray, you won $" << player_bet.get_net_balance() - player_bet.get_wage_initial() << " dollars"<<std::endl;
+    if( (player_bet.get_wage() - player_bet.get_wage_initial()) > 0 ){
+        std::cout << ">>> Hooray, you won $" << player_bet.get_wage() - player_bet.get_wage_initial() << " dollars"<<std::endl;
     } else {
         std::cout << ">>> ;( you dont won nothing, bye ;(" << std::endl;
     }
-    std::cout << ">>> You are leaving the Keno table with $" << player_bet.get_net_balance() << " dollars"<<std::endl;
+    std::cout << ">>> You are leaving the Keno table with $" << player_bet.get_wage() << " dollars"<<std::endl;
 
     // !> Exiting
     return EXIT_SUCCESS;    

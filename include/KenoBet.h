@@ -159,13 +159,6 @@ class KenoBet
         cash_type get_wage_initial(void) const;
 
         /**
-         * @brief To get a net balance
-         * 
-         * @return cash_type The money about net balance
-         */
-        cash_type get_net_balance(void);
-
-        /**
          * @brief Set the round payment
          * 
          * @param _round_payment The new payment
@@ -211,7 +204,6 @@ class KenoBet
         set_of_numbers_type m_spots; // <! The player ’s bet .
         cash_type m_wage; // <! The player ’s wage
         number_type m_rounds; // <!"Number of rounds" of bets that the player will play        
-        cash_type m_net_balance; // <! The net balance
         cash_type m_wage_initial; // <! Initial value
         cash_type m_round_payment; // <! Round payment   
 };

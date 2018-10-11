@@ -73,8 +73,8 @@ bool KenoBet::initialization_parameters(char *FileName, KenoBet &fist){
  */
 void KenoBet::This_is_round(const number_type &round_now, KenoBet &fist){
     std::cout << "         --------------------------------------------------" << std::endl;
-    std::cout << "         This is round #" << round_now << " of " << fist.get_rounds() << ", and your wage is $" << fist.get_wage_initial() / fist.get_rounds() << ". Good luck!" << std::endl;
-    fist.set_wage( fist.get_wage() - ( fist.get_wage_initial() / fist.get_rounds() ) + fist.get_m_round_payment() );
+    std::cout << "         This is round #" << round_now << " of " << fist.get_rounds() << ", and your wage is $" << std::setprecision(2) << fist.get_wage_initial() / fist.get_rounds() << ". Good luck!" << std::endl;
+    fist.set_wage( fist.get_wage() - ( fist.get_wage_initial() / fist.get_rounds() ) );
     set_of_numbers_type hits_are = ( fist.get_hits(fist.set_hits()) );
     std::cout << "         The hits are: [ ";
     // <! hits vector
@@ -93,7 +93,7 @@ void KenoBet::This_is_round(const number_type &round_now, KenoBet &fist){
             ++num_hits;
         }
     }    
-    // <! Hit some number
+    // <! Hit check number
     if(num_hits > 0){
         // <! Showing successful numbers
         std::cout << "         You hit the following number(s) [ ";
@@ -101,18 +101,20 @@ void KenoBet::This_is_round(const number_type &round_now, KenoBet &fist){
             std::cout << i << " ";  
         }
         std::cout << "], a total of " << You_hit.size() << " hits out of " << fist.size() << std::endl; 
-        // <! Set cash currente and payment
-        fist.set_wage( ( fist.get_wage_initial() / fist.get_rounds() ) * payout_table[fist.get_spots().size()-1][You_hit.size()] );
-        fist.set_m_round_payment( ( fist.get_wage_initial() / fist.get_rounds() ) * payout_table[fist.get_spots().size()-1][You_hit.size()]);
+        // <! Set cash currente and payment        
+        fist.set_m_round_payment( ( fist.get_wage_initial() / fist.get_rounds() ) * (payout_table[fist.get_spots().size()-1][You_hit.size()]));
         // <! Sho the payment da table
         std::cout << "         Payout rate is " <<payout_table[fist.get_spots().size()-1][You_hit.size()] << ", thus you came out with: $" << fist.get_m_round_payment() << std::endl;
+        // <! Show the net balance
+        fist.set_wage(fist.get_m_round_payment()+fist.get_wage());
+        std::cout << "         Your net balance so far is: $" <<  fist.get_wage() << " dollars." << std::endl;
     }
     else
     {
-        std::cout << "         You dont hit anyone number" << std::endl;        
+        std::cout << "         You dont hit anyone number" << std::endl;     
+        // <! Show the net balance
+        std::cout << "         Your net balance so far is: $" << fist.get_wage() << " dollars." << std::endl;   
     }
-    // <! Show the net balance
-    std::cout << "         Your net balance so far is: $" << fist.get_net_balance() << " dollars." << std::endl;
 }
 
 /**
@@ -233,17 +235,6 @@ bool KenoBet::set_wage_initial(cash_type wage_initial)
 cash_type KenoBet::get_wage_initial(void) const
 {
     return m_wage_initial;
-}
-
-/**
- * @brief To get a net balance
- * 
- * @return cash_type The money about net balance
- */
-cash_type KenoBet::get_net_balance(void)
-{
-    m_net_balance = m_wage + m_round_payment;
-    return m_net_balance;
 }
 
 /**
