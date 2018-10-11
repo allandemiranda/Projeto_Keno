@@ -35,6 +35,8 @@ bool KenoBet::catch_bet(char *fileName, std::vector <float> &bet){
     while(ifs >> valuer){
         bet.push_back(valuer);
     }
+    if( not ifs.eof() )
+        return false;
 	ifs.close();
     return true;
 }
