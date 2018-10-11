@@ -22,6 +22,11 @@
 using number_type = unsigned short int; // <! data type for a keno hit .
 using cash_type = float;                // <! Defines the wage type in this application .
 using set_of_numbers_type = std ::vector<number_type>;
+
+/**
+ * @brief Global vector payout_table
+ * 
+ */
 const std::vector < std::vector <cash_type> > payout_table = {
     {
         0, 3
@@ -69,6 +74,11 @@ const std::vector < std::vector <cash_type> > payout_table = {
         0, 0, 0, 0.5, 0.5, 1, 2, 5, 15, 50, 150, 300, 600, 1200, 2500, 10000
     }
 };
+
+/**
+ * @brief Class KenoBet to play the game
+ * 
+ */
 class KenoBet
 {
     public:
@@ -169,8 +179,32 @@ class KenoBet
          */
         cash_type get_m_round_payment(void) const;
 
+        /**
+         * @brief Function to get base file parameters
+         * 
+         * @param fileName File name
+         * @param bet Vector that keeps the three parameters
+         * @return true If everything happened normal
+         * @return false If there were any errors
+         */
         bool catch_bet(char *fileName, std::vector <float> &bet);
+
+        /**
+         * @brief Function to initialize game parameters
+         * 
+         * @param FileName File name game playes
+         * @param fist The bet
+         * @return true If everything happened normal
+         * @return false If there were any errors
+         */
         bool initialization_parameters(char *FileName, KenoBet &fist);
+
+       /**
+         * @brief Rounds with plays
+         * 
+         * @param round_now Current round number
+         * @param fist Player bet
+         */
         void This_is_round(const number_type &round_now, KenoBet &fist);
 
     private:

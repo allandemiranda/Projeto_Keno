@@ -8,7 +8,9 @@
  * @copyright Copyright (c) 2018
  * 
  */
+
 #include "KenoBet.h"
+
 /**
  * @brief Main
  * 
@@ -16,7 +18,6 @@
  * @param argv File name
  * @return int EXIT
  */
-
 int main( int argc, char **argv )
 { 
     /**
@@ -79,6 +80,6 @@ int main( int argc, char **argv )
     }
     std::cout << ">>> You are leaving the Keno table with $" << player_bet.get_net_balance() << " dollars"<<std::endl;
 
-    // Exiting
+    // !> Exiting
     return EXIT_SUCCESS;    
 }
