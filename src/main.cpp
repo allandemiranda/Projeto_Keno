@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2018
  * 
  */
-
+#include "KenoBet.h"
 /**
  * @brief Main
  * 
@@ -16,6 +16,7 @@
  * @param argv File name
  * @return int EXIT
  */
+
 int main( int argc, char **argv )
 { 
     /**
@@ -24,7 +25,7 @@ int main( int argc, char **argv )
      */
     KenoBet player_bet;
     std::cout << ">>> Preparing to read bet file [data/" << argv[1] << "], please wait..." << std::endl;
-    if(!initialization_parameters(argv[1], player_bet)){
+    if(!player_bet.initialization_parameters(argv[1], player_bet)){
         std::cout << ">>> Displays startup error, check the data file" << std::endl;
         std::cout << "--------------------------------------------------" << std::endl;
         return EXIT_FAILURE;
@@ -48,10 +49,10 @@ int main( int argc, char **argv )
     std::cout << "         -------+---------" << std::endl;    
     std::cout << "         Hits   | Payout  " << std::endl;
     std::cout << "         -------+---------" << std::endl;
-    for(number_type i(0); i<(payout_table[player_bet.get_rounds()-1].size()); ++i){
+    for(number_type i(0); i < payout_table[player_bet.size()-1].size(); ++i){
         std::cout << std::setw(10);
         std::cout << std::fixed << i << std::setw(7) << " |";
-        std::cout << " " << std::setprecision(0) << payout_table[player_bet.get_rounds()-1][i] << std::endl;
+        std::cout << " " << std::setprecision(0) << payout_table[player_bet.size()-1][i] << std::endl;
     }
 
     /**
@@ -59,7 +60,7 @@ int main( int argc, char **argv )
      * 
      */
     for(number_type i(1); i <= player_bet.get_rounds(); ++i){
-        This_is_round(i, player_bet);
+        player_bet.This_is_round(i, player_bet);
     }
 
     /**

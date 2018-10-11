@@ -15,53 +15,6 @@
  * @brief Global vector payout_table
  * 
  */
-std::vector < std::vector <cash_type> > payout_table = {
-    {
-        0, 3
-    },
-    {
-        0, 1, 9
-    },
-    {
-        0, 1, 2, 16
-    },
-    {
-        0, 0.5, 2, 6, 12
-    },
-    {
-        0, 0.5, 1, 3, 15, 50
-    },
-    {
-        0, 0.5, 1, 2, 3, 30, 75
-    },
-    {
-        0, 0.5, 0.5, 1, 6, 12, 36, 100
-    },
-    {
-        0, 0.5, 0.5, 1, 3, 6, 19, 90, 720
-    },
-    {
-        0, 0.5, 0.5, 1, 2, 4, 8, 20, 80, 1200 
-    },
-    {
-        0, 0, 0.5, 1, 2, 3, 5, 10, 30, 600, 1800
-    },
-    {
-        0, 0, 0.5, 1, 1, 2, 6, 15, 25, 180, 1000, 3000
-    },
-    {
-        0, 0, 0, 0.5, 1, 2, 4, 24, 72, 250, 500, 2000, 4000
-    },
-    {
-        0, 0, 0, 0.5, 0.5, 3, 4, 5, 20, 80, 240, 500, 3000, 6000
-    },
-    {
-        0, 0, 0, 0.5, 0.5, 2, 3, 5, 12, 50, 150, 500, 1000, 2000, 7500
-    },
-    {
-        0, 0, 0, 0.5, 0.5, 1, 2, 5, 15, 50, 150, 300, 600, 1200, 2500, 10000
-    }
-};
 
 /**
  * @brief Function to get base file parameters
@@ -71,7 +24,7 @@ std::vector < std::vector <cash_type> > payout_table = {
  * @return true If everything happened normal
  * @return false If there were any errors
  */
-bool catch_bet(char *fileName, std::vector <float> &bet){
+bool KenoBet::catch_bet(char *fileName, std::vector <float> &bet){
     std::string route = "../data/"; // <! Begin route
     route = route + fileName; // <! Complete route
     std::ifstream ifs(route); // <! Open Route
@@ -94,7 +47,7 @@ bool catch_bet(char *fileName, std::vector <float> &bet){
  * @return true If everything happened normal
  * @return false If there were any errors
  */
-bool initialization_parameters(char *FileName, KenoBet &fist){
+bool KenoBet::initialization_parameters(char *FileName, KenoBet &fist){
     std::vector <float> parameters;
     if(!catch_bet(FileName, parameters)){
         return false;
@@ -121,7 +74,7 @@ bool initialization_parameters(char *FileName, KenoBet &fist){
  * @param round_now Current round number
  * @param fist Player bet
  */
-void This_is_round(const number_type &round_now, KenoBet &fist){
+void KenoBet::This_is_round(const number_type &round_now, KenoBet &fist){
     std::cout << "         --------------------------------------------------" << std::endl;
     std::cout << "         This is round #" << round_now << " of " << fist.get_rounds() << ", and your wage is $" << fist.get_wage_initial() / fist.get_rounds() << ". Good luck!" << std::endl;
     fist.set_wage( fist.get_wage() - ( fist.get_wage_initial() / fist.get_rounds() ) + fist.get_m_round_payment() );
