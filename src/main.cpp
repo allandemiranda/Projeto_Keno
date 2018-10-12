@@ -3,13 +3,10 @@
  * @author Allan de Miranda and Josue Claudio
  * @brief Main to the game
  * @version 0.1
- * @date 2018-10-06
- * 
- * @copyright Copyright (c) 2018
- * 
+ * @date 2018-10-11
  */
 
-#include "KenoBet.h" // Include the header
+#include "KenoBet.h" /// Include the header
 
 /**
  * @brief Main
@@ -27,8 +24,8 @@ int main( int argc, char **argv )
     KenoBet player_bet;
     std::cout << ">>> Preparing to read bet file [data/" << argv[1] << "], please wait..." << std::endl;
     if(!player_bet.initialization_parameters(argv[1], player_bet)){
-        std::cout << ">>> Displays startup error, check the data file" << std::endl;
-        std::cout << "--------------------------------------------------" << std::endl;
+        std::cerr << ">>> Displays startup error, check the data file" << std::endl;
+        std::cerr << "--------------------------------------------------" << std::endl;
         return EXIT_FAILURE;
     } else {
         std::cout << "--------------------------------------------------" << std::endl;
@@ -77,9 +74,9 @@ int main( int argc, char **argv )
     if( (player_bet.get_wage() - player_bet.get_wage_initial()) > 0 ){
         std::cout << ">>> Hooray, you won $" << player_bet.get_wage() - player_bet.get_wage_initial() << " dollars"<<std::endl;
     } else {
-        std::cout << ">>> ;( you dont won nothing, bye ;(" << std::endl;
+        std::cout << ">>> you did not win anything, bye ;(" << std::endl;
     }
-    std::cout << ">>> You are leaving the Keno table with $" << player_bet.get_wage() << " dollars"<<std::endl;
+    std::cout << ">>> You are leaving the Keno table with $" << std::abs( player_bet.get_wage() ) << " dollars"<<std::endl;
 
     // !> Exiting
     return EXIT_SUCCESS;    

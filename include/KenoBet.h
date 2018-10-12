@@ -3,28 +3,26 @@
  * @author Allan de Miranda and Josue Claudio
  * @brief Class KenoBet
  * @version 0.1
- * @date 2018-10-06
- * 
- * @copyright Copyright (c) 2018
- * 
+ * @date 2018-10-11
  */
+
 #ifndef KENO_BET_H
 #define KENO_BET_H
 
-#include <iostream>  // std::cout , std::cin, std::endl
-#include <algorithm> // std::begin , std::endl
-#include <cstdlib>     
+/// Library includes
+#include <iostream>
+#include <algorithm>      
 #include <fstream> 
 #include <iomanip>
 #include <random>  
-#include <sstream>  
 
+/// Typedefs 
 using number_type = unsigned short int; // <! data type for a keno hit .
 using cash_type = float;                // <! Defines the wage type in this application .
-using set_of_numbers_type = std ::vector<number_type>; // <! Vector
+using set_of_numbers_type = std::vector<number_type>; // <! Vector
 
 /**
- * @brief Global vector payout_table
+ * @brief Const vector payout_table
  * 
  */
 const std::vector < std::vector <cash_type> > payout_table = {
@@ -83,45 +81,44 @@ class KenoBet
 {
     public:
         
-        //! Creates an empty Keno bet .
-
+        //! Creates an empty Keno bet
         KenoBet() : m_wage(0){/* empty */};
 
-        /*! Adds a number to the spots only if the number is not already there .
-        @param spot_ The number we wish to include in the bet .
-        @return T if number chosen is successfully inserted ; F otherwise . */
+        /*! Adds a number to the spots only if the number is not already there
+        @param spot_ The number we wish to include in the bet
+        @return T if number chosen is successfully inserted; F otherwise */
         bool add_number(number_type spot_);
 
-        /*! Sets the amount of money the player is betting .
-        @param wage_ The wage .
-        @return True if we have a wage above zero ; false otherwise . */
+        /*! Sets the amount of money the player is betting
+        @param wage_ The wage
+        @return True if we have a wage above zero; false otherwise */
         bool set_wage(cash_type wage_);
 
-        //! Resets a bet to an empty state .
+        //! Resets a bet to an empty state
         void reset(void);
 
-        /*! Retrieves the player ’s wage on this bet .
-        @return The wage value . */
+        /*! Retrieves the player ’s wage on this bet
+        @return The wage value */
         cash_type get_wage(void) const;
 
-        /*! Returns to the current number of spots in the player ’s bet .
-        @return Number of spots present in the bet . */
+        /*! Returns to the current number of spots in the player’s bet
+        @return Number of spots present in the bet */
         size_t size(void) const;
 
         /**
-         * @brief 
+         * @brief Sets a game with 15 random hits
          * 
-         * @return set_of_numbers_type Tatal of the hits 
+         * @return set_of_numbers_type A vector with the hits 
          */
         set_of_numbers_type set_hits(void);
 
-        /*! Determine how many spots match the hits passed as argument .
-        @param hits_ List of hits randomly chosen by the computer .
-        @return An vector with the list of hits . */
+        /*! Determine how many spots match the hits passed as argument
+        @param hits_ List of hits randomly chosen by the computer
+        @return A vector with the list of hits */
         set_of_numbers_type get_hits(const set_of_numbers_type &hits_) const;
 
-        /*! Return a vector < spot_type > with the spots the player has picked so far .
-        @return The vector < spot_type > with the player ’s spots picked so far . */
+        /*! Return a vector < spot_type > with the spots the player has picked so far
+        @return The vector < spot_type > with the player ’s spots picked so far */
         set_of_numbers_type get_spots(void) const;
 
         /**
@@ -131,7 +128,7 @@ class KenoBet
          * @return true If we have a number of the rounds
          * @return false Otherwise
          */
-        bool set_rounds(const number_type rounds); 
+        bool set_rounds(const int &rounds); 
 
         /**
          * @brief Get the number of the rounds
@@ -139,8 +136,6 @@ class KenoBet
          * @return number_type Number of the rounds
          */
         number_type get_rounds(void) const;
-
-        // Wage functions
 
         /**
          * @brief Way to keep the starting money for final calculations
@@ -166,7 +161,7 @@ class KenoBet
         void set_m_round_payment(cash_type _round_payment);
 
         /**
-         * @brief Get the roud payment
+         * @brief Get the round payment
          * 
          * @return cash_type The money about the round payment
          */
@@ -200,10 +195,20 @@ class KenoBet
          */
         void This_is_round(const number_type &round_now, KenoBet &fist);
 
+        /**
+         * @brief Sorts elements within a search space defined by first and last, using the algorithm insertion sort
+         * 
+         * @tparam T Template class
+         * @param first Beginning of the search space
+         * @param last End of the search space 
+         */
+        template<class T>
+        void insertionSort(T first, T last);
+
     private:
-        set_of_numbers_type m_spots; // <! The player ’s bet .
-        cash_type m_wage; // <! The player ’s wage
-        number_type m_rounds; // <!"Number of rounds" of bets that the player will play        
+        set_of_numbers_type m_spots; // <! The player’s bet
+        number_type m_rounds; // <!"Number of rounds" of bets that the player will play 
+        cash_type m_wage; // <! The player’s wage
         cash_type m_wage_initial; // <! Initial value
         cash_type m_round_payment; // <! Round payment   
 };
