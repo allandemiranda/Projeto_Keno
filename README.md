@@ -4,7 +4,7 @@
 
   **Allan de Miranda Silva**
 
-  **Josué Claudio de Pontes**
+  **Josué Cláudio de Pontes**
 
 ### Introdução
 
@@ -12,7 +12,7 @@ O [Keno](https://pt.wikipedia.org/wiki/Keno) é um jogo de loteria muito popular
 
 Num casino tradicional, o jogo do Keno é composto por uma tômbola com 80 bolas numeradas. Os jogadores marcam nos seus cartões (numerados de 1 a 80) alguns dos números. O montante de números marcados varia de casino para casino, mas geralmente varia entre um e quinze.
 
-Da tômbola extrai-se um total de 20 bolas. Os jogadores são pagos de acordo com a coincidência dos seus números marcados no cartão e dos números extraídos. Quantos mais números coincidirem, maior é o prémio atribuído.
+Da tômbola extrai-se um total de 20 bolas na versão padrão do jogo. Os jogadores são pagos de acordo com a coincidência dos seus números marcados no cartão e dos números extraídos. Quantos mais números coincidirem, maior é o prémio atribuído.
 
 Nos casinos online, o jogo de Keno é geralmente apresentado num ecrã que contém a tômbola, e o cartão, que é marcado aleatoriamente ou através do clique no mouse do computador. Os números sorteados na tômbola são marcados diretamente no cartão, o que torna o jogo mais rápido. 
 
